@@ -6,7 +6,5 @@ class MindmapSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model  = Mindmap
         # fields = '__all__'
-        fields = ['id','author','describe','md_file' ,'json_file'] # 想輸出傳給前端的東西(id是auto field，預設read only)
-
-'''mm = Mindmap.objects.get(id='1')
-MindmapSerializer(mm).data'''
+        # fields = ['id','author','describe','md_file' ,'json_file']
+        fields = ['id','author','describe', 'json_file'] # respnse給前端的東西(id是auto field，預設read only)
