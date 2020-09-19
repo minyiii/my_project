@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from user.serializer import UserSerializer, GroupSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
 
@@ -12,12 +12,18 @@ from rest_framework.decorators import api_view
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_permissions(self):
-        if self.action in ('update',):
-            self.permission_classes = [IsAuthenticated]
+        print(self.request.method)
+        if self.action in ('create',): # 任何人都可以註冊
+            self.permission_classes = [AllowAny]
+        elif self.action in ('list', 'destroy'):
+            self.permission_classes = [IsAdminUser]
         return [permission() for permission in self.permission_classes]
+
+    def get_object(self):
+        return User.objects.get(user=self.request.user)
 
 
 

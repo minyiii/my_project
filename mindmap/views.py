@@ -7,9 +7,21 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
-# Create your views here.
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+import re
+import pandas as pd
+import random, string
+import json
+from textrank4zh import TextRank4Keyword, TextRank4Sentence
 
 
+# sub代表li底下的解釋
+level_num = {'h1':5, 'h2':4, 'h3':3, 'text':2, 'li':1, 'sub':0}
+df_level = pd.DataFrame(columns=['level', 'topic', 'father', 'is_sum'])
+select_level = {'h1':True, 'h2':True, 'h3':False, 'text':False, 'li':True, 'sub':True}
+
+# --------------- Create your views here.
 class MindmapsViewSet(viewsets.ModelViewSet):
     queryset = Mindmap.objects.all()
     serializer_class = MindmapSerializer
@@ -24,7 +36,27 @@ class MindmapsViewSet(viewsets.ModelViewSet):
     # http://127.0.0.1:8000/api/mindmaps/{id}/edit
     @action(detail=True, methods=['get'])
     def edit(self, request, pk=None):
-        mm = get_object_or_404(Mindmap, pk=pk)
+        # mm = get_object_or_404(Mindmap, pk=pk)
+        print(request.user)
+        mm = get_object_or_404(Mindmap, pk=pk, author = request.user)
+        result = { # ''內是response中的欄位名、mm.?要看model中設定的欄位名
+            'id': mm.id,
+            'json': mm.json_file
+        }
+        return Response(result, status=status.HTTP_200_OK)
+
+    # 儲存json檔
+    # http://127.0.0.1:8000/api/mindmaps/{id}/save
+    @action(detail=True, methods=['patch'])
+    def save(self, request, pk=None):
+        print(request.user)
+        mm = get_object_or_404(Mindmap, pk=pk, author = request.user)
+        try:
+            mm.json_file = request.FILES['json_file']
+            mm.save()
+        except:
+            print('error')
+            return Response(result, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         result = { # ''內是response中的欄位名、mm.?要看model中設定的欄位名
             'id': mm.id,
             'json': mm.json_file
@@ -32,7 +64,41 @@ class MindmapsViewSet(viewsets.ModelViewSet):
         return Response(result, status=status.HTTP_200_OK)
 
     # POST，回傳JSON
+    def create(self, validated_data):
+        try:
+            request = self.request
+            print(request.POST['H2'])
+            print(int(request.POST['H2']))
+            author = request.user
+            select_level['h2'] = int(request.POST['H2'])
+            select_level['h3'] = int(request.POST['H3'])
+            select_level['text'] = int(request.POST['Paragraph'])
+            do_textsum = int(request.POST['Summary'])
+            describe = request.POST['Describe']
+            md_file = request.FILES['md_file']
 
+            j = Mindmap.objects.create(author=author, describe=describe , md_file=md_file)
+            j.save() # save後autofield才會計算完
+            j_id = j.id
+            print('j.id: '+str(j_id))
+            print('j.md_file: '+str(j.md_file)) # uploads/MD_test5_a7mTNBk.md
+            md_url = './upload/{url}'.format(url=j.md_file)
+            print(md_url)
+
+            json_file = mm_execute(j_id, author, md_url, select_level, do_textsum)
+            print('after mm_exe')
+            j = Mindmap.objects.get(id=j_id)
+            j.json_file = json_file
+            j.save()
+
+            result = { # ''內是response中的欄位名、mm.?要看model中設定的欄位名
+                'id': j_id,
+                'json': j.json_file
+            }
+        except:
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        return Response(result, status=status.HTTP_200_OK)
 
 
 # ------------------- function ---------------------
