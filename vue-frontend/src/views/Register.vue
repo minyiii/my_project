@@ -7,27 +7,16 @@
         <h2>Register</h2>
         <form action @submit="SubmitHandler" @reset="ResetHandler">
           <div class="form-group">
-            <label for="account">Account :</label>
+            <label for="username">Account :</label>
             <input
               type="text"
-              name="account"
-              id="account"
+              name="username"
+              id="username"
               class="form-control"
               v-model="form.account"
               required
             />
           </div>
-          <!-- <div class="form-group">
-            <label for="date">Birthday :</label>
-            <input
-              type="date"
-              name="date"
-              id="date"
-              class="form-control"
-              v-model="form.bday"
-              required
-            />
-          </div> -->
           <div class="form-group">
             <label for="email">E-mail :</label>
             <input
@@ -82,8 +71,7 @@ export default {
   data() {
     return {
       form: {
-        account: "",
-        bday: "",
+        username: "",
         email: "",
         password: "",
         confirm: "",
@@ -93,8 +81,7 @@ export default {
   methods: {
     ResetHandler(evt) {
       evt.preventDefault();
-      (this.form.account = ""),
-        (this.form.bday = ""),
+      (this.form.username = ""),
         (this.form.email = ""),
         (this.form.password = ""),
         (this.form.confirm = "");
@@ -106,26 +93,26 @@ export default {
       } else {
         alert("Successfully registered!");
         this.$router.push("/login");
-        // this.$axios
-        //   .post("http://localhost:3000/user-info", {
-        //     account: this.form.account,
-        //     bday: this.form.bday,
-        //     email: this.form.email,
-        //     password: this.form.pwd,
-        //   })
-        //   .then((res) => {
-        //     (this.form.account = ""),
-        //       (this.form.bday = ""),
-        //       (this.form.email = ""),
-        //       (this.form.password = ""),
-        //       (this.form.confirm = "");
-        //     // this.form.push("res.data");
-        //     this.$router.push("/login");
-        //     console.log(res);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+        this.$axios
+          .post("http://127.0.0.1:8000/api/users/", {
+            headers: {
+              "X-CSRFToken": csrftoken,
+            },
+            username: this.form.username,
+            email: this.form.email,
+            password: this.form.pwd,
+          })
+          .then((res) => {
+            (this.form.username = ""),
+              (this.form.email = ""),
+              (this.form.password = ""),
+              (this.form.confirm = "");
+            this.$router.push("/login");
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
   },

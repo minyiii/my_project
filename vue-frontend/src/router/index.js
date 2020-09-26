@@ -74,32 +74,6 @@ export default new Router({
       path: '*',
       redirect: "/"
     },
-    // {
-    //   path: "/notes",
-    //   name: "Notes",
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () =>
-    //     import(/* webpackChunkName: "about" */ "../views/Notes.vue")
-    // },
-    // {
-    //   path: "/mdedit",
-    //   name: "MDEdit",
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () =>
-    //     import(/* webpackChunkName: "about" */ "../views/MDEdit.vue")
-    // },
-    // {
-    //   path: "/originalnote",
-    //   name: "Original-Note",
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () =>
-    //     import(/* webpackChunkName: "about" */ "../views/Original-Note.vue")
-    // }
+
   ]
 });
