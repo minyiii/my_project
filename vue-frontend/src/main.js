@@ -39,6 +39,9 @@ Vue.prototype.$axios = axios;
 // import myUpload from "vue-image-crop-upload/upload-1.vue";
 // Vue.use(myUpload);
 
+// import Cookies from 'js-cookie'
+// Vue.use(Cookies)
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

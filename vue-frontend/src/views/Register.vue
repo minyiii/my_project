@@ -62,6 +62,7 @@
 <script>
 // @ is an alias to /src
 import VBar from "@/components/Navbar-Top-After/index.vue";
+import Cookies from "js-cookie";
 
 export default {
   name: "Register",
@@ -88,7 +89,7 @@ export default {
     },
     SubmitHandler(evt) {
       evt.preventDefault();
-      var csrftoken = Cookies.get("csrftoken");
+      let csrftoken = Cookies.get("csrftoken");
 
       if (this.password != this.confirm) {
         alert("Please check your password before you submit");
