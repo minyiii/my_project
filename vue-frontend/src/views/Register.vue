@@ -88,6 +88,8 @@ export default {
     },
     SubmitHandler(evt) {
       evt.preventDefault();
+      var csrftoken = Cookies.get("csrftoken");
+
       if (this.password != this.confirm) {
         alert("Please check your password before you submit");
       } else {
