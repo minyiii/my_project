@@ -86,22 +86,22 @@ export default {
           name: "澳洲銀行業傳將買更多政府債券.md",
           describe: "新聞",
         },
-        {
-          name: "OB Notes.md",
-          describe: "CH1",
-        },
-        {
-          name: "電商技術.md",
-          describe: "CH8",
-        },
-        {
-          name: "購物車.md",
-          describe: "架構設計",
-        },
-        {
-          name: "電商技術.md",
-          describe: "CH10",
-        },
+        // {
+        //   name: "OB Notes.md",
+        //   describe: "CH1",
+        // },
+        // {
+        //   name: "電商技術.md",
+        //   describe: "CH8",
+        // },
+        // {
+        //   name: "購物車.md",
+        //   describe: "架構設計",
+        // },
+        // {
+        //   name: "電商技術.md",
+        //   describe: "CH10",
+        // },
         // {
         //   name: "Example6.md",
         //   describe: "adad",

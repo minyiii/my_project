@@ -7,7 +7,13 @@
         <form action>
           <div class="form-group" @submit="SubmitHandler">
             <label for="account">Account :</label>
-            <input type="text" name="account" id="account" class="form-control" v-model="account" />
+            <input
+              type="text"
+              name="account"
+              id="account"
+              class="form-control"
+              v-model="account"
+            />
           </div>
           <div class="form-group">
             <label for="password">Password :</label>
@@ -23,7 +29,7 @@
         </form>
         <p>
           No account yet?
-          <router-link :to="{name:'Register'}">Register Now!</router-link>
+          <router-link :to="{ name: 'Register' }">Register Now!</router-link>
         </p>
       </div>
     </div>
@@ -59,7 +65,7 @@ export default {
       data.append("account", this.account);
       data.append("password", this.password);
       this.axios
-        .post("/login/check/", data)
+        .post("http://127.0.0.1:8000/api-token-auth/", data)
         .then(function (response) {
           console.log(response);
           alert(response.data.msg);

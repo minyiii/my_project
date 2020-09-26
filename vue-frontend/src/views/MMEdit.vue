@@ -143,7 +143,7 @@
         :values="mind"
         :options="options"
         ref="jsMind"
-        height="600px"
+        height="700px"
       ></js-mind>
     </div>
     <Toolkit />
