@@ -19,7 +19,6 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 from django.views.generic import TemplateView # 新增的
 
 
-
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html")),
     path('admin/', admin.site.urls),

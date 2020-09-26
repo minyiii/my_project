@@ -6,13 +6,19 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework import status
 from rest_framework.decorators import api_view
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
 
 # 允许查看和编辑user 的 API endpoint
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     def get_permissions(self):
         print(self.request.method)
@@ -24,8 +30,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         return User.objects.get(user=self.request.user)
-
-
 
 
 # 允许查看和编辑group的 API endpoint
