@@ -98,8 +98,8 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=1),
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=600),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=10),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }
 
 # Database
