@@ -5,7 +5,7 @@
       <div class="box p-4">
         <!-- <router-link to="/convert">Convert</router-link> -->
         <h2>Register</h2>
-        <form action @submit="SubmitHandler" @reset="ResetHandler">
+        <form action @submit="SubmitHandler" @reset="ResetHandler">{% csrf_token %}
           <div class="form-group">
             <label for="username">Account :</label>
             <input
@@ -13,7 +13,7 @@
               name="username"
               id="username"
               class="form-control"
-              v-model="form.account"
+              v-model="form.username"
               required
             />
           </div>
@@ -63,6 +63,7 @@
 // @ is an alias to /src
 import VBar from "@/components/Navbar-Top-After/index.vue";
 import Cookies from "js-cookie";
+import qs from 'qs'
 
 export default {
   name: "Register",
@@ -91,20 +92,37 @@ export default {
       evt.preventDefault();
       let csrftoken = Cookies.get("csrftoken");
 
+      // var postData = new URLSearchParams();
+      // postData.append('username', this.form.username);
+      // postData.append('email', this.form.email);
+      // postData.append('password', this.form.password);
+
       if (this.password != this.confirm) {
         alert("Please check your password before you submit");
       } else {
-        alert("Successfully registered!");
-        this.$router.push("/login");
-        this.$axios
-          .post("http://127.0.0.1:8000/api/users/", {
-            headers: {
-              "X-CSRFToken": csrftoken,
-            },
+        let postData = this.qs.stringify({
+        // let postData = JSON.stringify({
             username: this.form.username,
             email: this.form.email,
             password: this.form.pwd,
-          })
+        })
+        alert("Successfully registered!");
+        this.$router.push("/login");
+        this.$axios
+          .post("http://127.0.0.1:8000/api/users/",
+            // {
+            //   username: this.form.username,
+            //   email: this.form.email,
+            //   password: this.form.pwd,
+            // },
+            postData,
+            // {
+            //   headers: {
+            //     'Content-type': 'application/json'
+            //     // "X-CSRFToken": csrftoken,
+            //   },
+            // }
+          )
           .then((res) => {
             (this.form.username = ""),
               (this.form.email = ""),
@@ -115,6 +133,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            console.log(csrftoken);
           });
       }
     },

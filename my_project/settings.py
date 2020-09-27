@@ -12,6 +12,45 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import datetime
+from corsheaders.defaults import default_headers
+
+# CORS_ALLOW_HEADERS = list(default_headers) + [
+#     'X-CSRFTOKEN',
+# ]
+
+# CSRF_COOKIE_NAME = "csrftoken"
+
+# 设置跨域
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:8000',
+# )
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+)
+
+CORS_ALLOW_HEADERS = (
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Pragma',
+)
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,8 +74,9 @@ SECRET_KEY = '%%s3o^gw^q6d-l(%s!3&e9t(n9cg@*htkjxzix#(@ko-sz43vp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOST = ['127.0.0.1', 'localhost']
 
 
 
@@ -55,6 +95,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'user',
     'mindmap',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -62,7 +103,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -89,9 +130,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'my_project.wsgi.application'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',

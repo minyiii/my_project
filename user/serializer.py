@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from django.contrib.auth import get_user_model # If used custom user model
+from django.views.decorators.csrf import csrf_exempt
 
 UserModel = get_user_model()
 # Create your models here.
@@ -13,13 +14,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'username','password', 'email', 'groups')
         # fields = '__all__'
 
+    @csrf_exempt
     def create(self, validated_data):
         user = User(
             email=validated_data['email'],
             username=validated_data['username']
         )
+        print("in serializer, email: "+email)
         user.set_password(validated_data['password'])
         user.save()
+
         return user
 
     '''def update(self, instance, validated_data):
