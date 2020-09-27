@@ -90,22 +90,27 @@ export default {
     SubmitHandler(evt) {
       evt.preventDefault();
       let csrftoken = Cookies.get("csrftoken");
+      let axiosConfig = {
+        headers: {
+          "X-CSRFToken": csrftoken,
+          "content-type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${localStorage.get("token")}`,
+        },
+      };
+      let postData = {
+        username: this.form.username,
+        email: this.form.email,
+        password: this.form.pwd,
+      };
 
       if (this.password != this.confirm) {
         alert("Please check your password before you submit");
       } else {
         alert("Successfully registered!");
-        this.$router.push("/login");
         this.$axios
-          .post("http://127.0.0.1:8000/api/users/", {
-            headers: {
-              "X-CSRFToken": csrftoken,
-            },
-            username: this.form.username,
-            email: this.form.email,
-            password: this.form.pwd,
-          })
+          .post("http://127.0.0.1:8000/api/users/", postData, axiosConfig)
           .then((res) => {
+            console.log(res);
             (this.form.username = ""),
               (this.form.email = ""),
               (this.form.password = ""),
@@ -115,6 +120,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            console.log(csrftoken);
           });
       }
     },

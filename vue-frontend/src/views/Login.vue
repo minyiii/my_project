@@ -6,11 +6,11 @@
         <h2>Login</h2>
         <form action>
           <div class="form-group" @submit="SubmitHandler">
-            <label for="account">Account :</label>
+            <label for="username">Account :</label>
             <input
               type="text"
-              name="account"
-              id="account"
+              name="username"
+              id="username"
               class="form-control"
               v-model="account"
             />
@@ -44,7 +44,7 @@ export default {
   name: "Login",
   data() {
     return {
-      account: "",
+      username: "",
       password: "",
     };
   },
@@ -62,7 +62,7 @@ export default {
   methods: {
     SubmitHandler() {
       let data = new URLSearchParams();
-      data.append("account", this.account);
+      data.append("username", this.username);
       data.append("password", this.password);
       this.axios
         .post("http://127.0.0.1:8000/api-token-auth/", data)
@@ -80,7 +80,7 @@ export default {
       // this.$axios.get("http://localhost:3000/user-info").then((res) => {
       //   for (i in res.data.length) {
       //     if (
-      //       this.account == res.data[i].account &&
+      //       this.username == res.data[i].username &&
       //       this.password == res.data[i].password
       //     ) {
       //       localStorage.setItem("token", "ImLogin");
