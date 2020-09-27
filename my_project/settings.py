@@ -18,8 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # TEMPLATE_DIR = os.path.join(BASE_DIR,'template')
 # STATIC_DIR = os.path.join(BASE_DIR,'static')
 
-TEMPLATE_DIR = os.path.join(BASE_DIR,'vue-frontend/dist')
-STATIC_DIR = os.path.join(BASE_DIR,'vue-frontend/dist/static')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'vue-frontend/dist')
+STATIC_DIR = os.path.join(BASE_DIR, 'vue-frontend/dist/static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
 MEDIA_URL = '/upload/'
@@ -29,13 +29,12 @@ MEDIA_URL = '/upload/'
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%%s3o^gw^q6d-l(%s!3&e9t(n9cg@*htkjxzix#(@ko-sz43vp'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 
 # Application definition
@@ -163,4 +162,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR,]
+STATICFILES_DIRS = [STATIC_DIR, ]

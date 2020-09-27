@@ -5,7 +5,7 @@ import Home from "../views/Home.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -77,3 +77,25 @@ export default new Router({
 
   ]
 });
+
+// 以下不確定寫法
+// router.beforeEach((to, from, next) => {
+//   // 获取 JWT Token
+//   if (to.meta.requiresAuth) {
+//     // 判断该路由是否需要登录权限
+//     if (localStorage.getItem('JWT_TOKEN')) {
+//       // 通过获取当前的token是否存在
+//       next()
+//     } else {
+//       next({
+//         path: '/login',
+//         query: { redirect: to.fullPath }
+//         // 将跳转的路由path作为参数，登录成功后跳转到该路由
+//       })
+//     }
+//   } else {
+//     next()
+//   }
+// })
+
+export default router

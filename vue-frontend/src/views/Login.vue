@@ -76,25 +76,12 @@ export default {
           // if (response.data.status === 0) {
           //   location.href = "/convert";
           // }
+          window.sessionstorage.setItem("jwt", response.token);
           this.$router.push("/convert");
         })
         .catch(function (error) {
           console.log(error);
         });
-      // 尚須修改，因牽扯password，可能需加個token
-      // this.$axios.get("http://localhost:3000/user-info").then((res) => {
-      //   for (i in res.data.length) {
-      //     if (
-      //       this.username == res.data[i].username &&
-      //       this.password == res.data[i].password
-      //     ) {
-      //       localStorage.setItem("token", "ImLogin");
-      //       this.$router.push("/convert");
-      //     } else {
-      //       alert("login failed");
-      //     }
-      //   }
-      // });
     },
   },
 };

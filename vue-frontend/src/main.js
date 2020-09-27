@@ -3,7 +3,6 @@
 import Vue from "vue";
 import App from "./App";
 import router from "./router";
-
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -32,15 +31,43 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 Vue.prototype.$axios = axios;
 
-// Vue.filter("marked", function(input) {
-//   return marked(input);
-// });
+// 以下開始不確定是否要加
+// axios.defaults.baseURL = baseURL
+// http request 拦截器
+// axios.interceptors.request.use(
+//   config => {
+//     if (localStorage.JWT_TOKEN) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+//       config.headers.Authorization = `token ${localStorage.JWT_TOKEN}`
+//     }
+//     return config
+//   },
+//   err => {
+//     return Promise.reject(err)
+//   })
 
-// import myUpload from "vue-image-crop-upload/upload-1.vue";
-// Vue.use(myUpload);
+// // http response 拦截器
+// axios.interceptors.response.use(
+//   response => {
+//     return response
+//   },
+//   error => {
+//     if (error.response) {
+//       console.log('axios:' + error.response.status)
+//       switch (error.response.status) {
+//         case 401:
+//           // 返回 401 清除token信息并跳转到登录页面
+//           store.commit('LOG_OUT')
+//           router.replace({
+//             path: '/login',
+//             query: { redirect: router.currentRoute.fullPath }
+//           })
+//       }
+//     }
+//     return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+//   })
+// Vue.prototype.$http = axios;
+// 以上不確定是否要加
 
-// import Cookies from 'js-cookie'
-// Vue.use(Cookies)
 
 /* eslint-disable no-new */
 new Vue({
