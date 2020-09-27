@@ -13,7 +13,7 @@
               name="username"
               id="username"
               class="form-control"
-              v-model="form.account"
+              v-model="form.username"
               required
             />
           </div>
@@ -93,8 +93,8 @@ export default {
       let axiosConfig = {
         headers: {
           "X-CSRFToken": csrftoken,
-          "content-type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${localStorage.get("token")}`,
+          // "content-type": "application/x-www-form-urlencoded",
+          // Authorization: localStorage.getItem("jwtToken"),
         },
       };
       let postData = {

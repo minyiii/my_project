@@ -53,25 +53,30 @@ export default {
   },
   // 在生成頁面的時候透過此cookie判斷是否為登入狀態
   // username 為後端傳過來的資料
-  mounted() {
-    let allCookies = document.cookie;
-    if (allCookies.indexOf("username") !== -1) {
-      this.$router.push("/convert");
-    }
-  },
+  // mounted() {
+  //   let allCookies = document.cookie;
+  //   if (allCookies.indexOf("username") !== -1) {
+  //     this.$router.push("/convert");
+  //   }
+  // },
   methods: {
     SubmitHandler() {
-      let data = new URLSearchParams();
-      data.append("username", this.username);
-      data.append("password", this.password);
+      // let data = new URLSearchParams();
+      // data.append("username", this.username);
+      // data.append("password", this.password);
+      let postData = {
+        username: this.form.username,
+        password: this.form.pwd,
+      };
       this.axios
-        .post("http://127.0.0.1:8000/api-token-auth/", data)
+        .post("http://127.0.0.1:8000/api-token-auth/", postData)
         .then(function (response) {
           console.log(response);
-          alert(response.data.msg);
-          if (response.data.status === 0) {
-            location.href = "/convert";
-          }
+          // alert(response.data.msg);
+          // if (response.data.status === 0) {
+          //   location.href = "/convert";
+          // }
+          this.$router.push("/convert");
         })
         .catch(function (error) {
           console.log(error);
