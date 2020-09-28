@@ -65,8 +65,8 @@ export default {
       // data.append("username", this.username);
       // data.append("password", this.password);
       let postData = {
-        username: this.form.username,
-        password: this.form.pwd,
+        username: this.username,
+        password: this.password,
       };
       this.axios
         .post("http://127.0.0.1:8000/api-token-auth/", postData)

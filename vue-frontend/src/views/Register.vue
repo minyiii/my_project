@@ -89,14 +89,14 @@ export default {
     },
     SubmitHandler(evt) {
       evt.preventDefault();
-      let csrftoken = Cookies.get("csrftoken");
-      let axiosConfig = {
-        headers: {
-          "X-CSRFToken": csrftoken,
-          // "content-type": "application/x-www-form-urlencoded",
-          // Authorization: localStorage.getItem("jwtToken"),
-        },
-      };
+      // let csrftoken = Cookies.get("csrftoken");
+      // let axiosConfig = {
+      //   headers: {
+      //     "X-CSRFToken": csrftoken,
+      //     // "content-type": "application/x-www-form-urlencoded",
+      //     // Authorization: localStorage.getItem("jwtToken"),
+      //   },
+      // };
       let postData = {
         username: this.form.username,
         email: this.form.email,
@@ -108,7 +108,7 @@ export default {
       } else {
         alert("Successfully registered!");
         this.$axios
-          .post("http://127.0.0.1:8000/api/users/", postData, axiosConfig)
+          .post("http://127.0.0.1:8000/api/users/", postData)
           .then((res) => {
             console.log(res);
             (this.form.username = ""),
@@ -120,7 +120,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-            console.log(csrftoken);
+            // console.log(csrftoken);
           });
       }
     },
