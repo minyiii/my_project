@@ -89,26 +89,30 @@ export default {
     },
     SubmitHandler(evt) {
       evt.preventDefault();
-      // let csrftoken = Cookies.get("csrftoken");
-      // let axiosConfig = {
-      //   headers: {
-      //     "X-CSRFToken": csrftoken,
-      //     // "content-type": "application/x-www-form-urlencoded",
-      //     // Authorization: localStorage.getItem("jwtToken"),
-      //   },
-      // };
+      let csrftoken = Cookies.get("csrftoken");
+      let axiosConfig = {
+        headers: {
+          "X-CSRFToken": csrftoken,
+          // "content-type": "application/x-www-form-urlencoded",
+          "content-type": "multipart/form-data",
+          // Authorization: localStorage.getItem("jwtToken"),
+        },
+      };
       let postData = {
         username: this.form.username,
         email: this.form.email,
-        password: this.form.pwd,
+        password: this.form.password,
       };
+
+      const myFormData = new FormData();
+      myFormData.append("postData", JSON.stringify(postData));
 
       if (this.password != this.confirm) {
         alert("Please check your password before you submit");
       } else {
         alert("Successfully registered!");
         this.$axios
-          .post("http://127.0.0.1:8000/api/users/", postData)
+          .post("http://127.0.0.1:8000/api/users/", myFormData, axiosConfig)
           .then((res) => {
             console.log(res);
             (this.form.username = ""),
@@ -120,7 +124,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-            // console.log(csrftoken);
+            console.log(error.response.request._response);
           });
       }
     },

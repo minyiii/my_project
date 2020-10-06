@@ -1,16 +1,18 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from django.contrib.auth import get_user_model # If used custom user model
+from django.contrib.auth import get_user_model  # If used custom user model
 
 UserModel = get_user_model()
 # Create your models here.
 
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         # password不能省，不然會噴error，就算加了他也不會出現在response中
-        fields = ('id', 'url', 'username','password', 'email', 'groups')
+        fields = ('id', 'url', 'username', 'password', 'email', 'groups')
         # fields = '__all__'
 
     def create(self, validated_data):
